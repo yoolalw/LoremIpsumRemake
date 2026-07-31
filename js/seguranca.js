@@ -4,6 +4,15 @@ const timer = document.getElementById("timer")
 const pontos = document.getElementById("pontos")
 const somaPontos = 0
 
+function home(){
+    window.location.href = "home.html"
+}
+
+function login() {
+    window.location.href = "login.html"
+    localStorage.clear()
+}
+
 function soma(quantidade) {
     total =  quantidade += somaPontos
     pontos.textContent = `Pontos: ${total}`
