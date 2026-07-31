@@ -33,3 +33,7 @@ btn.addEventListener("click", async (e) => {
     }
 
 })
+
+function sobre(){
+    window.location.href = "sobre.html"
+}
