@@ -30,6 +30,7 @@ btn.addEventListener("click", async (e) => {
         console.log("Existe, login realizado")
         localStorage.setItem("token", usuario_ativo.token)
         localStorage.setItem("nome", usuario_ativo.nome)
+        window.location.href = "home.html"
     }
 
 })
