@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lorem ipsum</title>
+</head>
+
+<body>
+    <div class="justify-center align-middle flex flex-col items-center m-auto">
+        <img src="img/lorem_logo.png">
+        <h1 class="text-[40px] font-serif text-gray-500">Altere sua senha aqui!</h1>
+        <div class="box w-[400px] h-[90px] border-1 mt-1 border-gray-400 flex flex-col mt-5 rounded-xl">
+            <label class="mt-2 ml-2 text-[20px] font-serif text-gray-600 ">Nova senha</label>
+            <input type="text" id="novasenha" placeholder="" class="ml-2 mt-1">
+        </div>
+        <div class="box w-[400px] h-[90px] border-1 mt-1 border-gray-400 flex flex-col mt-5 rounded-xl">
+            <label class="mt-2 ml-2 text-[20px] font-serif text-gray-600 ">Confirmar nova senha</label>
+            <input type="text" id="novasenhaconfirmada" placeholder="" class="ml-2 mt-1">
+        </div>
+        <button id="btnAlterar"
+            class="mt-4 h-[40px] w-[340px] rounded-xl text-white font-serif hover:bg-blue-800 cursor-pointer bg-[#2e537d]">Alterar</button>
+
+    </div>
+
+    <script>
+        const btn = document.getElementById("btnAlterar")
+        btn.addEventListener("click", (e) => {
+            const novasenha = document.getElementById("novasenha").value
+            const novasenhaconfirmada = document.getElementById("novasenhaconfirmada").value
+
+            if (novasenha == '' && novasenhaconfirmada == '') {
+                return
+            }
+            if (novasenha == novasenhaconfirmada) {
+                window.location.href = "login.html"
+            }
+        })
+    </script>
+
+</body>
+
+</html>

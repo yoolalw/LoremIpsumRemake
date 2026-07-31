@@ -26,6 +26,7 @@ btn.addEventListener("click", async (e) => {
             const resposta = document.getElementById("resposta").value
             if (validado.resposta === resposta) {
                 console.log("acertou")
+                window.location.href = "mudarsenha.html"
             }
         })
     }
