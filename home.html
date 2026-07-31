@@ -10,8 +10,34 @@
 </head>
 
 <body class="bg-gray-100">
-    <div class="justify-center align-middle items-center flex flex-col m-auto">
-        <img src=""
+    <div class="justify-center align-middle items-center flex m-auto flex-col">
+        <div class="h-32 bg-gradient-to-r from-[#4e99ed] flex to-[#194373] w-full shadow-xl">
+            <div class="w-full flex justify-start align-middle items-center">
+                <img src="img/lorem_logo.png" class="size-[210px] mt-[-10px] cursor-pointer">
+            </div>
+            <div class="w-full flex items-center justify-end ">
+                <h2 class="text-blue-300 text-[30px] font-serif" id="nomeUsuario"></h2>
+                <img src="img/door_206526.png" class="size-[100px] cursor-pointer" onclick="login()">
+            </div>
+        </div>
+
+        <h1 class="text-[70px] font-serif mt-20 text-[#2e4763] ">QUIZES</h1>
+
+        <div id="quizes" class="h-[400px] w-[600px] border-1 gap-4 rounded-xl mt-10 p-5 border-blue-500 flex ">
+            <div class="h-full rounded-xl shadow-xl w-[300px] hover:bg-gray-200 cursor-pointer border-1 border-[#375a82] justify-center align-middle items-center flex flex-col"
+                onclick="seguranca()">
+                <h1 class="font-serif text-[35px] text-center text-[#375a82] ">Segurança no trabalho</h1>
+                <h3 class="font-serif mt-5 text-blue-900">Data: 02/02/2024</h3>
+                <p class="text-[12px] font-serif">Clique para iniciar!</p>
+            </div>
+            <div class="h-full rounded-xl shadow-xl w-[300px] hover:bg-gray-200 cursor-pointer border-1 border-[#375a82] justify-center align-middle items-center flex flex-col"
+                onclick="inteligencia()">
+                <h1 class="font-serif text-[35px] text-center text-[#375a82] ">Inteligência emocional</h1>
+                <h3 class="font-serif mt-5 text-blue-900">Data: 03/05/2024</h3>
+                <p class="text-[12px] font-serif">Clique para iniciar!</p>
+            </div>
+        </div>
+
     </div>
 </body>
 
