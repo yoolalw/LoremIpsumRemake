@@ -4,27 +4,31 @@
         "email": "ari_malvadao@exemplo.com",
         "senha": "ariari",
         "pergunta": "Qual a data de nascimento?",
-        "resposta": "-384"
+        "resposta": "-384",
+        "token": "token_ari"
     },
     {
         "nome": "Frajola",
         "email": "frazinho_furacão@exemplo.com",
         "senha": "frafra",
         "pergunta": "Qual a raça desse gato?",
-        "resposta": "Frajola"
+        "resposta": "Frajola",
+        "token": "token_fra"
     },
     {
         "nome": "Canabrava",
         "email": "canabrava51@exemplo.com",
         "senha": "cancan",
         "pergunta": "Qual a cor da bebida favorita?",
-        "resposta": "Transparente"
+        "resposta": "Transparente",
+        "token": "token_can"
     },
     {
         "nome": "Arthurito",
         "email": "arturo@exemplo.com",
         "senha": "artart",
         "pergunta": "Qual a altura?",
-        "resposta": "1,70m"
+        "resposta": "1,70m",
+        "token": "token_art"
     }
 ]
