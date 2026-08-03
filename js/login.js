@@ -2,12 +2,13 @@ const btn = document.getElementById("btn_login")
 const msg = document.getElementById("msg")
 const msgDiv = document.getElementById("msgDiv")
 const fetchToDo = "./data.json"
+let timer = 16
 let cont = 0
 msg.style.display = "none"
 msgDiv.style.display = "none"
 btn.addEventListener("click", async (e) => {
     e.preventDefault()
-    cont++    
+    cont++
 
     const email = document.getElementById("email").value
     const senha = document.getElementById("senha").value
@@ -19,14 +20,28 @@ btn.addEventListener("click", async (e) => {
         msgDiv.style.display = "block"
         msg.style.display = "block"
         console.log("Usuario inexistente.")
-        if(cont == 3){
+        if (cont == 3) {
             console.log(cont)
             btn.disabled = true
             btn.className = "mt-4 h-[40px] w-[340px] rounded-xl text-white font-serif bg-gray-300"
-            msg.textContent = "Tente novamente em 15 segundos."
-        }   
+            if (btn.disabled == true) {
+                setInterval(() => {
+                    if (timer > 0) {
+                        timer--
+                        msg.textContent = `Tente novamente em ${timer} segundos.`
+                    }
+                    if (timer == 0) {
+                        btn.className = 'mt-4 h-[40px] w-[340px] rounded-xl text-white font-serif hover:bg-blue-800 cursor-pointer bg-[#2e537d]'
+                    }
+
+                }, 1000)
+            }
+
+        }
         return
     }
+
+
     if (usuario_ativo.senha !== senha) {
         msg.textContent = "Senha incorreta."
         msg.style.display = "block"
@@ -44,6 +59,6 @@ btn.addEventListener("click", async (e) => {
 
 })
 
-function sobre(){
+function sobre() {
     window.location.href = "sobre.html"
 }
