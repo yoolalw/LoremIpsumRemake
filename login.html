@@ -23,11 +23,16 @@
             <label class="mt-2 ml-2 text-[20px] font-serif text-gray-600 ">Senha</label>
             <input type="password" id="senha" placeholder="" class="ml-2 mt-1">
         </div>
-        <button id="btn_login" class="mt-4 h-[40px] w-[340px] rounded-xl text-white font-serif hover:bg-blue-800 cursor-pointer bg-[#2e537d]">Entrar</button>
+        <button id="btn_login"
+            class="mt-4 h-[40px] w-[340px] rounded-xl text-white font-serif hover:bg-blue-800 cursor-pointer bg-[#2e537d]">Entrar</button>
 
         <a href="recuperar_senha.html" class="mt-2 text-blue-400 font-serif">Esqueci minha senha</a>
-    
-        <h2 id="msg" class="font-serif mt-5 h-[30px] text-center bg-red-200 rounded-xl flex justify-center w-[200px]">Ambos estao incorretos!</h2>
+
+        <div id="msgDiv" class="mt-1 h-[60px] text-center bg-red-200 rounded-xl flex items-center justify-center w-[300px]">
+            <img src="img/lorem_logo.png" class="size-[50px]">
+            <h2 id="msg"
+                class="font-serif text-center mt-[-30px]">Ambos estao incorretos!</h2>
+        </div>
     </div>
 
     <script src="js/login.js"></script>
