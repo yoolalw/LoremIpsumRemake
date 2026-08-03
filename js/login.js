@@ -2,10 +2,18 @@ const btn = document.getElementById("btn_login")
 const msg = document.getElementById("msg")
 const msgDiv = document.getElementById("msgDiv")
 const fetchToDo = "./data.json"
+const blockedValue = sessionStorage.getItem("blocked")
 let timer = 16
 let cont = 0
 msg.style.display = "none"
 msgDiv.style.display = "none"
+
+if (blockedValue == true) {
+    msgDiv.style.display = "none"
+    msg.style.display = "none"
+    btn.className = "mt-4 h-[40px] w-[340px] rounded-xl text-white font-serif bg-gray-300"
+}
+
 btn.addEventListener("click", async (e) => {
     e.preventDefault()
     cont++
@@ -24,13 +32,16 @@ btn.addEventListener("click", async (e) => {
             console.log(cont)
             btn.disabled = true
             btn.className = "mt-4 h-[40px] w-[340px] rounded-xl text-white font-serif bg-gray-300"
-            if (btn.disabled == true) {
+            if (btn.disabled) {
                 setInterval(() => {
                     if (timer > 0) {
                         timer--
                         msg.textContent = `Tente novamente em ${timer} segundos.`
                     }
                     if (timer == 0) {
+                        msgDiv.style.display = "none"
+                        msg.style.display = "none"
+                        btn.disabled = false
                         btn.className = 'mt-4 h-[40px] w-[340px] rounded-xl text-white font-serif hover:bg-blue-800 cursor-pointer bg-[#2e537d]'
                     }
 
@@ -40,12 +51,16 @@ btn.addEventListener("click", async (e) => {
         }
         return
     }
-
-
     if (usuario_ativo.senha !== senha) {
+        msgDiv.style.display = "block"
         msg.textContent = "Senha incorreta."
         msg.style.display = "block"
         console.log("senha incorreta")
+        if (cont == 3) {
+            btn.disabled = true
+            btn.className = "mt-4 h-[40px] w-[340px] rounded-xl text-white font-serif bg-gray-300"
+            sessionStorage.setItem("blocked", true)
+        }
         return
     }
 
