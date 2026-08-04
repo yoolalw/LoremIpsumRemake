@@ -3,10 +3,26 @@ const msg = document.getElementById("msg")
 const msgDiv = document.getElementById("msgDiv")
 const fetchToDo = "./data.json"
 const blockedValue = sessionStorage.getItem("blocked")
+
+
 let timer = 16
 let cont = 0
 msg.style.display = "none"
 msgDiv.style.display = "none"
+
+async function savingData() {
+    if (!localStorage.getItem('usuarios')) {
+        const respose = await fetch(fetchToDo)
+        const data = await respose.json()
+        localStorage.setItem("usuarios", JSON.stringify(data))
+    }
+}
+savingData()
+
+const data = JSON.parse(localStorage.getItem("usuarios"))
+
+console.log(data);
+console.log(JSON.parse(localStorage.getItem("usuarios")))
 
 if (blockedValue) {
     btn.disabled = true
@@ -14,17 +30,18 @@ if (blockedValue) {
     msg.style.display = "none"
     btn.className = "mt-4 h-[40px] w-[340px] rounded-xl text-white font-serif bg-gray-300"
 } else {
-
-    btn.addEventListener("click", async (e) => {
+    btn.addEventListener("click",  (e) => {
         e.preventDefault()
         cont++
 
         const email = document.getElementById("email").value
         const senha = document.getElementById("senha").value
 
-        const respose = await fetch(fetchToDo)
-        const data = await respose.json()
+        console.log(data)
+
+
         const usuario_ativo = data.find(u => u.email === email)
+
         if (!usuario_ativo) {
             msgDiv.style.display = "block"
             msg.style.display = "block"
@@ -45,7 +62,6 @@ if (blockedValue) {
                             btn.disabled = false
                             btn.className = 'mt-4 h-[40px] w-[340px] rounded-xl text-white font-serif hover:bg-blue-800 cursor-pointer bg-[#2e537d]'
                         }
-
                     }, 1000)
                 }
 
@@ -73,8 +89,12 @@ if (blockedValue) {
             window.location.href = "home.html"
         }
 
+
     })
 }
+
+
 function sobre() {
     window.location.href = "sobre.html"
 }
+

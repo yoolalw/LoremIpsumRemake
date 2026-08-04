@@ -9,8 +9,8 @@ btn.addEventListener("click", async (e) => {
 
     const email = document.getElementById("email").value
 
-    const response = await fetch(file)
-    const data = await response.json()
+    const data = JSON.parse(localStorage.getItem("usuarios"))
+    console.log(data)
     const validado = data.find(u => u.email === email)
     if (!validado) {
         msg.textContent = "Este email nao existe."
@@ -22,14 +22,19 @@ btn.addEventListener("click", async (e) => {
         const pergunta = document.getElementById("pergunta")
         pergunta.textContent = validado.pergunta
         const btnEnviar = document.getElementById("enviar")
+
         btnEnviar.addEventListener("click", (e) => {
             e.preventDefault()
             const resposta = document.getElementById("resposta").value
             if (validado.resposta === resposta) {
+                localStorage.setItem("emailMudarSenha", email)
                 console.log("acertou")
-                window.location.href = "mudarsenha.html"
+                console.log(email)
+                setTimeout(() => {
+                    window.location.href = "mudarsenha.html"
+                }, 2000)
             }
-            else{
+            else {
                 msg.textContent = 'Resposta inválida.'
             }
         })
@@ -37,3 +42,4 @@ btn.addEventListener("click", async (e) => {
 
 
 })
+
