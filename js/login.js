@@ -86,6 +86,7 @@ if (blockedValue) {
             console.log("Existe, login realizado")
             localStorage.setItem("token", usuario_ativo.token)
             localStorage.setItem("nome", usuario_ativo.nome)
+            localStorage.setItem("img", usuario_ativo.img)
             window.location.href = "home.html"
         }
 

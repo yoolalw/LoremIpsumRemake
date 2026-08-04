@@ -5,7 +5,8 @@
         "senha": "ariari",
         "pergunta": "Qual a data de nascimento?",
         "resposta": "-384",
-        "token": "token_ari"
+        "token": "token_ari",
+        "img": "./img/Aristóteles.jpg"
     },
     {
         "nome": "Frajola",
@@ -13,7 +14,8 @@
         "senha": "frafra",
         "pergunta": "Qual a raça desse gato?",
         "resposta": "Frajola",
-        "token": "token_fra"
+        "token": "token_fra",
+        "img": "./img/Frajola.jpeg"
     },
     {
         "nome": "Canabrava",
@@ -21,7 +23,8 @@
         "senha": "cancan",
         "pergunta": "Qual a cor da bebida favorita?",
         "resposta": "Transparente",
-        "token": "token_can"
+        "token": "token_can",
+        "img": "./img/Canabrava.png"
     },
     {
         "nome": "Arthurito",
@@ -29,6 +32,7 @@
         "senha": "artart",
         "pergunta": "Qual a altura?",
         "resposta": "1,70m",
-        "token": "token_art"
+        "token": "token_art",
+        "img": "./img/Arthurito.png"
     }
 ]
