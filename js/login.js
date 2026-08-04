@@ -8,72 +8,73 @@ let cont = 0
 msg.style.display = "none"
 msgDiv.style.display = "none"
 
-if (blockedValue == true) {
+if (blockedValue) {
+    btn.disabled = true
     msgDiv.style.display = "none"
     msg.style.display = "none"
     btn.className = "mt-4 h-[40px] w-[340px] rounded-xl text-white font-serif bg-gray-300"
-}
+} else {
 
-btn.addEventListener("click", async (e) => {
-    e.preventDefault()
-    cont++
+    btn.addEventListener("click", async (e) => {
+        e.preventDefault()
+        cont++
 
-    const email = document.getElementById("email").value
-    const senha = document.getElementById("senha").value
+        const email = document.getElementById("email").value
+        const senha = document.getElementById("senha").value
 
-    const respose = await fetch(fetchToDo)
-    const data = await respose.json()
-    const usuario_ativo = data.find(u => u.email === email)
-    if (!usuario_ativo) {
-        msgDiv.style.display = "block"
-        msg.style.display = "block"
-        console.log("Usuario inexistente.")
-        if (cont == 3) {
-            console.log(cont)
-            btn.disabled = true
-            btn.className = "mt-4 h-[40px] w-[340px] rounded-xl text-white font-serif bg-gray-300"
-            if (btn.disabled) {
-                setInterval(() => {
-                    if (timer > 0) {
-                        timer--
-                        msg.textContent = `Tente novamente em ${timer} segundos.`
-                    }
-                    if (timer == 0) {
-                        msgDiv.style.display = "none"
-                        msg.style.display = "none"
-                        btn.disabled = false
-                        btn.className = 'mt-4 h-[40px] w-[340px] rounded-xl text-white font-serif hover:bg-blue-800 cursor-pointer bg-[#2e537d]'
-                    }
+        const respose = await fetch(fetchToDo)
+        const data = await respose.json()
+        const usuario_ativo = data.find(u => u.email === email)
+        if (!usuario_ativo) {
+            msgDiv.style.display = "block"
+            msg.style.display = "block"
+            console.log("Usuario inexistente.")
+            if (cont == 3) {
+                console.log(cont)
+                btn.disabled = true
+                btn.className = "mt-4 h-[40px] w-[340px] rounded-xl text-white font-serif bg-gray-300"
+                if (btn.disabled) {
+                    setInterval(() => {
+                        if (timer > 0) {
+                            timer--
+                            msg.textContent = `Tente novamente em ${timer} segundos.`
+                        }
+                        if (timer == 0) {
+                            msgDiv.style.display = "none"
+                            msg.style.display = "none"
+                            btn.disabled = false
+                            btn.className = 'mt-4 h-[40px] w-[340px] rounded-xl text-white font-serif hover:bg-blue-800 cursor-pointer bg-[#2e537d]'
+                        }
 
-                }, 1000)
+                    }, 1000)
+                }
+
             }
-
+            return
         }
-        return
-    }
-    if (usuario_ativo.senha !== senha) {
-        msgDiv.style.display = "block"
-        msg.textContent = "Senha incorreta."
-        msg.style.display = "block"
-        console.log("senha incorreta")
-        if (cont == 3) {
-            btn.disabled = true
-            btn.className = "mt-4 h-[40px] w-[340px] rounded-xl text-white font-serif bg-gray-300"
-            sessionStorage.setItem("blocked", true)
+        if (usuario_ativo.senha !== senha) {
+            msgDiv.style.display = "block"
+            msg.textContent = "Senha incorreta."
+            msg.style.display = "block"
+            console.log("senha incorreta")
+            if (cont == 3) {
+                btn.disabled = true
+                btn.className = "mt-4 h-[40px] w-[340px] rounded-xl text-white font-serif bg-gray-300"
+                sessionStorage.setItem("blocked", true)
+            }
+            return
         }
-        return
-    }
 
-    if (usuario_ativo.email === email && usuario_ativo.senha === senha) {
-        msg.style.display = "none"
-        console.log("Existe, login realizado")
-        localStorage.setItem("token", usuario_ativo.token)
-        localStorage.setItem("nome", usuario_ativo.nome)
-        window.location.href = "home.html"
-    }
+        if (usuario_ativo.email === email && usuario_ativo.senha === senha) {
+            msg.style.display = "none"
+            console.log("Existe, login realizado")
+            localStorage.setItem("token", usuario_ativo.token)
+            localStorage.setItem("nome", usuario_ativo.nome)
+            window.location.href = "home.html"
+        }
 
-})
-
+    })
+}
 function sobre() {
     window.location.href = "sobre.html"
 }
