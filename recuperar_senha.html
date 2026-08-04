@@ -18,6 +18,18 @@
             <input type="email" id="email" placeholder="email@example" class="ml-2 mt-1">
         </div>
 
+
+        <div id="popup" class="fixed mt-40 justify-center align-middle items-center m-auto">
+            <div
+                class="h-[250px] w-[500px] items-center align-middle justify-center flex bg-white border-1 border-black flex-col">
+                <div class="flex justify-end w-full mr-5">
+                    <p id="closepopup" class="border-b-1 text-gray-500 cursor-pointer">Fechar</p>
+                </div>
+                <img src="img/lorem_logo.png" class="size-[100px] ">
+                <h1 id="textpopup" class="font-serif text-center mb-15 text-[30px]">Erro!</h1>
+            </div>
+        </div>
+
         <button id="btn"
             class="mt-4 h-[40px] w-[340px] rounded-xl text-white font-serif hover:bg-blue-800 cursor-pointer bg-[#2e537d]">Entrar</button>
 
@@ -27,7 +39,7 @@
             <input type="text" id="resposta" class="border-1 rounded-xl border-gray-400">
             <button id="enviar" class="bg-gray-300 cursor-pointer rounded-xl">Enviar</button>
         </div>
-        <p id="msg" class="font-serif"></p>
+        
 
     </div>
 

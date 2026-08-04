@@ -5,10 +5,16 @@ const fetchToDo = "./data.json"
 const blockedValue = sessionStorage.getItem("blocked")
 
 
+const popup = document.getElementById("popup")
+const closepopup = document.getElementById("closepopup")
+const textpopup = document.getElementById("textpopup")
+
+
 let timer = 16
 let cont = 0
-msg.style.display = "none"
-msgDiv.style.display = "none"
+popup.style.display = "none"
+
+
 
 async function savingData() {
     if (!localStorage.getItem('usuarios')) {
@@ -30,7 +36,7 @@ if (blockedValue) {
     msg.style.display = "none"
     btn.className = "mt-4 h-[40px] w-[340px] rounded-xl text-white font-serif bg-gray-300"
 } else {
-    btn.addEventListener("click",  (e) => {
+    btn.addEventListener("click", (e) => {
         e.preventDefault()
         cont++
 
@@ -43,8 +49,12 @@ if (blockedValue) {
         const usuario_ativo = data.find(u => u.email === email)
 
         if (!usuario_ativo) {
-            msgDiv.style.display = "block"
-            msg.style.display = "block"
+            popup.style.display = "block"
+            textpopup.textContent = "Ambas informações estão incorretas!"
+            closepopup.addEventListener('click', (e) => {
+                e.preventDefault()
+                popup.style.display = 'none'
+            })
             console.log("Usuario inexistente.")
             if (cont == 3) {
                 console.log(cont)
@@ -69,9 +79,14 @@ if (blockedValue) {
             return
         }
         if (usuario_ativo.senha !== senha) {
-            msgDiv.style.display = "block"
-            msg.textContent = "Senha incorreta."
-            msg.style.display = "block"
+
+            popup.style.display = "block"
+            textpopup.textContent = "Senha incorreta."
+            closepopup.addEventListener('click', (e) => {
+                e.preventDefault()
+                popup.style.display = 'none'
+            })
+
             console.log("senha incorreta")
             if (cont == 3) {
                 btn.disabled = true
@@ -82,7 +97,6 @@ if (blockedValue) {
         }
 
         if (usuario_ativo.email === email && usuario_ativo.senha === senha) {
-            msg.style.display = "none"
             console.log("Existe, login realizado")
             localStorage.setItem("token", usuario_ativo.token)
             localStorage.setItem("nome", usuario_ativo.nome)
@@ -94,8 +108,6 @@ if (blockedValue) {
     })
 }
 
-
 function sobre() {
     window.location.href = "sobre.html"
 }
-

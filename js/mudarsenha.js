@@ -23,6 +23,8 @@ btn.addEventListener("click", (e) => {
         closepopup.addEventListener("click", (e) => {
             e.preventDefault()
             popup.style.display = "none"
+
+
         })
         return
     }
