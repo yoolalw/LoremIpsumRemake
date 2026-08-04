@@ -1,159 +1,95 @@
+const nome = localStorage.getItem("nome")
+const nomeUsuario = document.getElementById("nomeUsuario")
+const img = localStorage.getItem("img")
+const header = document.getElementById("header")
+const img_pessoa = document.createElement("img")
+
 const timer = document.getElementById("timer")
-const container = document.getElementById("container")
 const pontos = document.getElementById("pontos")
 
-let pontuacaoTotal = 0
-let acertos = 0
-let intarvalId = null
+const container = document.getElementById("container")
+
 let perguntaAtual = 0
 
-const perguntas = [
-    {
-        texto: "Como se deve usar o protetor auricular?",
-        opcoes: [
-            {
-                texto: "No pescoco",
-                correta: false
-            },
-            {
-                texto: "No pescoco",
-                correta: true
-            },
-            {
-                texto: "No pescoco",
-                correta: false
-            }
-        ]
-    },
-    {
-        texto: "A bota de segurança é usada para:",
-        opcoes: [
-            {
-                texto: "Corrida",
-                correta: false
-            },
-            {
-                texto: "Jogar bola",
-                correta: false
-            },
-            {
-                texto: "Proteger contra objetos perfurocortantes",
-                correta: true
-            }
-        ]
-    },
-    {
-        texto: "A faixa zebrada serve para:",
-        opcoes: [
-            {
-                texto: "Marcar golzinho na rua",
-                correta: false
-            },
-            {
-                texto: "Delimitar uma área restrita",
-                correta: true
-            },
-            {
-                texto: "Amarrar o cachorro",
-                correta: false
-            }
-        ]
-    }
-]
+let pontoAtual = 0
+let timerAtual = 0
 
-function home() {
-    window.location.href = "home.html"
-}
-function login() {
-    localStorage.clear()
-    window.location.href = "login.html"
-}
-function soma(quantidade) {
-    pontuacaoTotal += quantidade
-    pontos.textContent = `Pontos: ${pontuacaoTotal}`
-    return pontuacaoTotal
-}
+// HEADER!!
+img_pessoa.src = img
+img_pessoa.className = "rounded-full size-[100px]"
+header.appendChild(img_pessoa)
+nomeUsuario.textContent = `Seja bem-vindo, ${nome}!`
+//----=-==--
 
-function iniciarTimer() {
-    if (intervalId) clearInterval(intervalId)
 
-    let time = 15
-    timer.textContent = time
-
-    intervalId = setInterval(() => {
-        time--
-        if (time > 0) {
-            timer.textContent = time
-        } else {
-            timer.textContent = "Tempo esgotado"
-            clearInterval(intervalId)
-            proximaPergunta()
+const perguntas =
+{
+    pergunta1: {
+        titulo: "Como se deve utilizar o protetor auricular?",
+        respostas: {
+            errada1: "No pescoço",
+            certa: "No ouvido",
+            errada2: "Na nuca"
         }
+    },
+    pergunta2: {
+        titulo: "A bota de segurança é usada para:",
+        respostas: {
+            errada1: "Corrida",
+            errada2: "Jogar bola",
+            certa: "Proteger contra objetos perfurocortantes"
+        }
+    },
+    pergunta3: {
+        titulo: "A faixa zebrada serve para:",
+        respostas: {
+            errada1: "Marcar golzinho na rua",
+            certa: "Delimitar uma área restrita",
+            errada2: "Amarrar o cachorro"
+        }
+    }
+}
+
+function criarPerguntas(titulo, r1, r2, r3) {
+    return `
+        <h1 class="font-serif text-[40px] text-blue-800">${titulo}</h1>
+        <label class="rounded-xl border-1 border-blue-800 w-[500px] h-[100px] items-center flex justify-center text-[30px] text-center"><input type="radio" class="mr-4 size-[20px]" id="${r1}" value="${r1}">${r1}</label>
+        <label class="rounded-xl border-1 border-blue-800 w-[500px] h-[100px] items-center flex justify-center text-[30px]  text-center"><input type="radio" class="mr-4 size-[20px]" id="${r2}" value="${r2}">${r2}</label>
+        <label class="rounded-xl border-1 border-blue-800 w-[500px] h-[100px] items-center flex justify-center text-[30px] text-center"><input type="radio" class="mr-4 size-[20px]" id="${r3}" value="${r3}">${r3}</label>
+    `
+}
+function somarPontuação() {
+    pontoAtual = 0
+
+    if (perguntas.certa) { return pontoAtual += 10 }
+    else if (perguntas.errada1 || perguntas.errada2) { return pontoAtual -= 5 }
+    else if (timerAtual == 0) { return pontoAtual -= 5 }
+}
+
+function cronometro() {
+    timer.textContent = ""
+    timerAtual = 16
+    setInterval(() => {
+        if (timerAtual > 0) {
+            timerAtual--
+            timer.textContent = timerAtual
+        } else if (timerAtual == 0) {
+            timer.textContent = 'Tempo esgotado.'
+        }
+
     }, 1000)
 }
 
-function renderPergunta(indice) {
-    const pergunta = perguntas[indice]
-
-    const opcoesHtml = pergunta.opcoes.map((op, i) => `
-        <label class="text-[20px] h-[40px] w-[500px] border-1 rounded-xl block" data-index="${i}">
-            <input class="p-4 w-[70px]" type="resposta" value="${op.correta ? 'certo' : 'errado'}">
-            ${op.texto}
-        </label>
-    `
-    ).join('')
-
-    container.innerHTML = `
-        <h2 class="font-serif text-[30px] text-[#4e6580] mb-3">${pergunta.texto}</h2>
-        ${opcoesHtml}
-    `
-    iniciarTimer()
-
-    const labels = container.querySelectorAll('label')
-    let respondido = false
-
-    labels.forEach((label, i) => {
-        label.addEventListener('click', (e) => {
-            e.preventDefault()
-            if (respondido) return
-            respondido = true
-            clearInterval(intervalId)
-
-            const acertou = pergunta.opcoes[i].correta
-            label.style.borderColor = acertou ? "green" : "red"
-
-            if (acertou) {
-                acertos++
-                soma(10)
-            } else {
-                soma(-5)
-            }
-
-            setTimeout(proximaPergunta, 800)
-        })
-    })
+function quiz() {
+    container.innerHTML += criarPerguntas(
+        perguntas.pergunta1.titulo,
+        perguntas.pergunta1.respostas.errada1,
+        perguntas.pergunta1.respostas.certa,
+        perguntas.pergunta1.respostas.errada2
+    )
+    
+    
+    
+    console.log(perguntas.pergunta1.respostas.errada2)
 }
-
-function proximaPergunta() {
-    perguntaAtual++
-    if (perguntaAtual < perguntas.length) {
-        renderPergunta(perguntaAtual)
-    } else {
-        finalizarQuiz()
-    }
-}
-
-function finalizarQuiz() {
-    clearInterval(intervalId)
-    timer.textContent = ""
-
-    const porcentagem = Math.round((acertos / perguntas.length) * 100)
-
-    container.innerHTML = `
-     <h1 class="font-serif text-blue-900 text-[30px]">Parabéns! Você chegou ao final do quiz.</h1>
-        <h2 class="font-serif text-blue-900 text-[20px]">Aproveitamento: ${porcentagem}%</h2>
-        <h2 class="font-serif text-blue-900 text-[20px]">${pontos.textContent}</h2>
-    `
-}
-
-renderPergunta(perguntaAtual)
+quiz()
