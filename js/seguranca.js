@@ -53,9 +53,9 @@ const perguntas =
 function criarPerguntas(titulo, r1, r2, r3) {
     return `
         <h1 class="font-serif text-[40px] text-blue-800">${titulo}</h1>
-        <label class="rounded-xl border-1 border-blue-800 w-[500px] h-[100px] items-center flex justify-center text-[30px] text-center"><input type="radio" class="mr-4 size-[20px]" id="${r1}" value="${r1}">${r1}</label>
-        <label class="rounded-xl border-1 border-blue-800 w-[500px] h-[100px] items-center flex justify-center text-[30px]  text-center"><input type="radio" class="mr-4 size-[20px]" id="${r2}" value="${r2}">${r2}</label>
-        <label class="rounded-xl border-1 border-blue-800 w-[500px] h-[100px] items-center flex justify-center text-[30px] text-center"><input type="radio" class="mr-4 size-[20px]" id="${r3}" value="${r3}">${r3}</label>
+        <label class="rounded-xl border-1 border-blue-800 w-[500px] h-[100px] items-center flex justify-center text-[30px] text-center"><input type="radio"  name="opcao" class="mr-4 size-[20px]" id="${r1}" value="${r1}">${r1}</label>
+        <label class="rounded-xl border-1 border-blue-800 w-[500px] h-[100px] items-center flex justify-center text-[30px]  text-center"><input type="radio" name="opcao" class="mr-4 size-[20px]" id="${r2}" value="${r2}">${r2}</label>
+        <label class="rounded-xl border-1 border-blue-800 w-[500px] h-[100px] items-center flex justify-center text-[30px] text-center"><input type="radio"  name="opcao" class="mr-4 size-[20px]" id="${r3}" value="${r3}">${r3}</label>
     `
 }
 function somarPontuação() {
@@ -81,6 +81,7 @@ function cronometro() {
 }
 
 function quiz() {
+    cronometro()
     container.innerHTML += criarPerguntas(
         perguntas.pergunta1.titulo,
         perguntas.pergunta1.respostas.errada1,
@@ -88,7 +89,12 @@ function quiz() {
         perguntas.pergunta1.respostas.errada2
     )
     
+    const certa = document.getElementById("certa")
+    const errada1 = document.getElementById("errada1")
+    const errada2 = document.getElementById("errada2")
     
+    
+
     
     console.log(perguntas.pergunta1.respostas.errada2)
 }
