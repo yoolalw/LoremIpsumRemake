@@ -17,6 +17,18 @@
             <label class="mt-2 ml-2 text-[20px] font-serif text-gray-600 ">Nova senha</label>
             <input type="text" id="novasenha" placeholder="" class="ml-2 mt-1">
         </div>
+
+        <div id="popup" class="fixed mt-40 justify-center align-middle items-center m-auto">
+            <div
+                class="h-[250px] w-[500px] items-center align-middle justify-center flex bg-white border-1 border-black flex-col">
+                <div class="flex justify-end w-full mr-5">
+                    <p id="closepopup" class="border-b-1 text-gray-500 cursor-pointer">Fechar</p>
+                </div>
+                <img src="img/lorem_logo.png" class="size-[100px] ">
+                <h1 class="font-serif text-center mb-15 text-[30px]">As senhas nao coincidem!</h1>
+            </div>
+        </div>
+
         <div class="box w-[400px] h-[90px] border-1 mt-1 border-gray-400 flex flex-col mt-5 rounded-xl">
             <label class="mt-2 ml-2 text-[20px] font-serif text-gray-600 ">Confirmar nova senha</label>
             <input type="text" id="novasenhaconfirmada" placeholder="" class="ml-2 mt-1">
@@ -26,20 +38,7 @@
 
     </div>
 
-    <script>
-        const btn = document.getElementById("btnAlterar")
-        btn.addEventListener("click", (e) => {
-            const novasenha = document.getElementById("novasenha").value
-            const novasenhaconfirmada = document.getElementById("novasenhaconfirmada").value
-
-            if (novasenha == '' && novasenhaconfirmada == '') {
-                return
-            }
-            if (novasenha == novasenhaconfirmada) {
-                window.location.href = "login.html"
-            }
-        })
-    </script>
+    <script src="js/mudarsenha.js"></script>
 
 </body>
 

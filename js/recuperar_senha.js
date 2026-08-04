@@ -17,6 +17,7 @@ btn.addEventListener("click", async (e) => {
     }
 
     if (validado) {
+        msg.textContent = ''
         perg.style.display = "block"
         const pergunta = document.getElementById("pergunta")
         pergunta.textContent = validado.pergunta
@@ -27,6 +28,9 @@ btn.addEventListener("click", async (e) => {
             if (validado.resposta === resposta) {
                 console.log("acertou")
                 window.location.href = "mudarsenha.html"
+            }
+            else{
+                msg.textContent = 'Resposta inválida.'
             }
         })
     }
