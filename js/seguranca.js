@@ -161,7 +161,6 @@ function mostrarPergunta(pergunta) {
 }
 function quiz() {
     mostrarPergunta(listaPerguntas[0])
-    cronometro()
-    
+    cronometro()   
 }
 quiz()
