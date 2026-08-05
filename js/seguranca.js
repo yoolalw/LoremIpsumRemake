@@ -76,25 +76,42 @@ function criarPerguntas(pergunta) {
 }
 
 
-function somarPontuação() {
-    pontoAtual = 0
-
-    if (perguntas.certa) { return pontoAtual += 10 }
-    else if (perguntas.errada1 || perguntas.errada2) { return pontoAtual -= 5 }
-    else if (timerAtual == 0) { return pontoAtual -= 5 }
+function somarPontuação(quantidade) {
+    pontoAtual += quantidade
+    if(timerAtual == 0) { 
+        pontoAtual - 5
+    }
+    pontos.textContent = `Pontos: ${pontoAtual}`
+    return pontoAtual
+    
 }
 
-function cronometro() {
-    timer.textContent = ""
-    timerAtual = 16
-    setInterval(() => {
-        if (timerAtual > 0) {
-            timerAtual--
-            timer.textContent = timerAtual
-        } else if (timerAtual == 0) {
-            timer.textContent = 'Tempo esgotado.'
-        }
+let intervalo = null
 
+function cronometro() {
+    clearInterval(intervalo )
+    timerAtual = 15;
+
+    timer.textContent = timerAtual
+    intervalo = setInterval(() => {
+        timerAtual--
+
+        if(timerAtual > 0){
+            timer.textContent = timerAtual
+        } else {
+            clearInterval(intervalo)
+            timer.textContent = 'Tempo esgotado'
+
+            somarPontuação(-5)
+
+            perguntaAtual++
+
+            if(perguntaAtual < listaPerguntas.length){
+                mostrarPergunta(listaPerguntas[perguntaAtual])
+            } else {
+                finalizarQuiz()
+            }
+        }
     }, 1000)
 }
 
@@ -112,13 +129,13 @@ function clickBotao(botao, cor, callback = null) {
     console.log("clicou botao")
 }
 
-function finalizarQuiz(){
+function finalizarQuiz() {
+    container.innerHTML = `
 
+    `
 }
 
 function mostrarPergunta(pergunta) {
-
-    cronometro()
     container.innerHTML = criarPerguntas(pergunta)
     const respostas = document.querySelectorAll('input[name="opcao"]');
 
@@ -127,6 +144,10 @@ function mostrarPergunta(pergunta) {
             if (resposta.dataset.correta === 'true') {
                 perguntaAtual++;
                 if (perguntaAtual < listaPerguntas.length) {
+                    timer.textContent = ''
+                   
+                    setInterval.clear
+                    cronometro()
                     mostrarPergunta(listaPerguntas[perguntaAtual])
                     somarPontuação(10)
                 } else {
@@ -135,15 +156,12 @@ function mostrarPergunta(pergunta) {
             } else if (resposta.dataset.correta === 'false') {
                 somarPontuação(-5)
             }
-
         })
     })
-
-
 }
 function quiz() {
     mostrarPergunta(listaPerguntas[0])
-
-
+    cronometro()
+    
 }
 quiz()
