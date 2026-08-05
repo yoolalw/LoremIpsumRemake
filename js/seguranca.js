@@ -26,38 +26,56 @@ const perguntas =
 {
     pergunta1: {
         titulo: "Como se deve utilizar o protetor auricular?",
-        respostas: {
-            errada1: "No pescoço",
-            certa: "No ouvido",
-            errada2: "Na nuca"
-        }
+        respostas: [
+            { texto: "No pescoço", correta: false },
+            { texto: "No ouvido", correta: true },
+            { texto: "Na nuca", correta: false }
+        ]
     },
     pergunta2: {
         titulo: "A bota de segurança é usada para:",
-        respostas: {
-            errada1: "Corrida",
-            errada2: "Jogar bola",
-            certa: "Proteger contra objetos perfurocortantes"
-        }
+        respostas: [
+            { texto: "Corrida", correta: false },
+            { texto: "Jogar bola", correta: false },
+            { texto: "Proteger contra objetos perfurocortantes", correta: true }
+        ]
     },
     pergunta3: {
         titulo: "A faixa zebrada serve para:",
-        respostas: {
-            errada1: "Marcar golzinho na rua",
-            certa: "Delimitar uma área restrita",
-            errada2: "Amarrar o cachorro"
-        }
+        respostas: [
+            { texto: "Marcar golzinho na rua", correta: false },
+            { texto: "Delimitar uma área restrita", correta: true },
+            { texto: "Amarrar o cachorro", correta: false },
+        ]
     }
 }
 
-function criarPerguntas(titulo, r1, r2, r3) {
-    return `
-        <h1 class="font-serif text-[40px] text-blue-800">${titulo}</h1>
-        <label class="rounded-xl border-1 border-blue-800 w-[500px] h-[100px] items-center flex justify-center text-[30px] text-center"><input type="radio"  name="opcao" class="mr-4 size-[20px]" id="${r1}" value="${r1}">${r1}</label>
-        <label class="rounded-xl border-1 border-blue-800 w-[500px] h-[100px] items-center flex justify-center text-[30px]  text-center"><input type="radio" name="opcao" class="mr-4 size-[20px]" id="${r2}" value="${r2}">${r2}</label>
-        <label class="rounded-xl border-1 border-blue-800 w-[500px] h-[100px] items-center flex justify-center text-[30px] text-center"><input type="radio"  name="opcao" class="mr-4 size-[20px]" id="${r3}" value="${r3}">${r3}</label>
-    `
+const listaPerguntas = [
+    perguntas.pergunta1,
+    perguntas.pergunta2,
+    perguntas.pergunta3,
+]
+function criarPerguntas(pergunta) {
+    let html = `<h1 class="font-serif text-[40px] text-blue-800">${pergunta.titulo}</h1>`
+
+    pergunta.respostas.forEach((resposta, index) => {
+        html += `
+        <label class="rounded-xl border-1 w-[500px] h-[100px] items-center flex justify-center text-[30px] text-center">
+            <input 
+                type="radio"  
+                name="opcao" 
+                class="mr-4 size-[20px]"
+                data-correta="${resposta.correta}" 
+                id="resposta${index}" 
+                value="${resposta.texto}">
+            ${resposta.texto}
+        </label>
+        `
+    })
+    return html;
 }
+
+
 function somarPontuação() {
     pontoAtual = 0
 
@@ -80,22 +98,52 @@ function cronometro() {
     }, 1000)
 }
 
-function quiz() {
-    cronometro()
-    container.innerHTML += criarPerguntas(
-        perguntas.pergunta1.titulo,
-        perguntas.pergunta1.respostas.errada1,
-        perguntas.pergunta1.respostas.certa,
-        perguntas.pergunta1.respostas.errada2
-    )
-    
-    const certa = document.getElementById("certa")
-    const errada1 = document.getElementById("errada1")
-    const errada2 = document.getElementById("errada2")
-    
-    
+function clickBotao(botao, cor, callback = null) {
+    if (!botao) return
 
-    
-    console.log(perguntas.pergunta1.respostas.errada2)
+    botao.addEventListener('click', (e) => {
+        e.preventDefault()
+        botao.style.borderColor = cor;
+
+        if (callback) {
+            callback()
+        }
+    })
+    console.log("clicou botao")
+}
+
+function finalizarQuiz(){
+
+}
+
+function mostrarPergunta(pergunta) {
+
+    cronometro()
+    container.innerHTML = criarPerguntas(pergunta)
+    const respostas = document.querySelectorAll('input[name="opcao"]');
+
+    respostas.forEach(resposta => {
+        resposta.addEventListener('click', () => {
+            if (resposta.dataset.correta === 'true') {
+                perguntaAtual++;
+                if (perguntaAtual < listaPerguntas.length) {
+                    mostrarPergunta(listaPerguntas[perguntaAtual])
+                    somarPontuação(10)
+                } else {
+                    container.innerHTML = 'gsgpsl'
+                }
+            } else if (resposta.dataset.correta === 'false') {
+                somarPontuação(-5)
+            }
+
+        })
+    })
+
+
+}
+function quiz() {
+    mostrarPergunta(listaPerguntas[0])
+
+
 }
 quiz()

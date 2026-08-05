@@ -15,6 +15,9 @@ function login() {
 
 function soma(quantidade) {
     total =  quantidade += somaPontos
+    if(quantidade < 0 ){
+        total = quantidade -= somaPontos
+    }
     pontos.textContent = `Pontos: ${total}`
 }
 
