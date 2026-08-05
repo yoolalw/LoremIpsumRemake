@@ -130,8 +130,10 @@ function clickBotao(botao, cor, callback = null) {
 }
 
 function finalizarQuiz() {
+    timer.textContent = ''
     container.innerHTML = `
-
+        <p>O aproveitamento deste quiz foi: </p>
+        <h2>Total de pontos: ${pontoAtual}</h2>
     `
 }
 
@@ -151,7 +153,7 @@ function mostrarPergunta(pergunta) {
                     mostrarPergunta(listaPerguntas[perguntaAtual])
                     somarPontuação(10)
                 } else {
-                    container.innerHTML = 'gsgpsl'
+                    finalizarQuiz()
                 }
             } else if (resposta.dataset.correta === 'false') {
                 somarPontuação(-5)
