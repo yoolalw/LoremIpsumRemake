@@ -8,6 +8,7 @@ const pontos = document.getElementById("pontos")
 const timer = document.getElementById("timer")
 const container = document.getElementById("container")
 
+let perguntaAtual = 0
 let pontosAtual = 0
 let time = 0
 
@@ -68,29 +69,43 @@ function criarPerguntas(pergunta) {
 }
 
 
+function somarPontuacao(quantidade) {
+    pontosAtual += quantidade
+    if (pontosAtual -= 0) {
+        pontos.textContent = 0
+    }
+    if (timerAtual == 0) {
+        pontos -= 5
+    }
+
+    pontos.textContent = `Pontos: ${pontosAtual}`
+    return pontosAtual
+}
 
 
-let intevalo = null
-function cronometro(){
+let intervalo = null
+function cronometro() {
     clearInterval(intervalo)
     time = 15
     intervalo = setInterval(() => {
-        if(time > 0 ){ 
+        if (time > 0) {
             time--
             timer.textContent = time
         } else {
             timer.textContent = 'Tempo esgotado.'
-            if(perguntaAtual < listaPerguntas.length){
+            if (perguntaAtual < listaPerguntas.length) {
+                clearInterval(intervalo)
                 mostrarPergunta(listaPerguntas[perguntaAtual])
                 somarPontuacao(-5)
             } else {
                 finalizarQuiz()
-            } 
+            }
         }
     }, 1000)
 }
 
-function quiz(){
+function quiz() {
+    cronometro()
     container.innerHTML = criarPerguntas(listaPerguntas[0])
 }
 quiz()
