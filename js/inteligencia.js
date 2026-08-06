@@ -11,6 +11,7 @@ const container = document.getElementById("container")
 let perguntaAtual = 0
 let pontosAtual = 0
 let time = 0
+let acertos = 0
 
 // HEADER!!
 img_pessoa.src = img
@@ -71,11 +72,8 @@ function criarPerguntas(pergunta) {
 
 function somarPontuacao(quantidade) {
     pontosAtual += quantidade
-    if (pontosAtual -= 0) {
-        pontos.textContent = 0
-    }
-    if (timerAtual == 0) {
-        pontos -= 5
+    if (time == 0) {
+        pontosAtual -= 5
     }
 
     pontos.textContent = `Pontos: ${pontosAtual}`
@@ -104,8 +102,37 @@ function cronometro() {
     }, 1000)
 }
 
-function quiz() {
+function mostrarPergunta(pergunta) {
     cronometro()
-    container.innerHTML = criarPerguntas(listaPerguntas[0])
+    container.innerHTML = criarPerguntas(pergunta)
+    const respostas = document.querySelectorAll('input[name="opcao"]')
+
+
+    respostas.forEach(resposta => {
+        resposta.addEventListener('click', () => {
+            const label = resposta.parentElement
+            if (resposta.dataset.correta === 'true') {
+                label.style.borderColor = 'green'
+                acertos++
+                perguntaAtual++
+                somarPontuacao(10)
+                if (perguntaAtual < listaPerguntas.length) {
+                    clearInterval(intervalo)
+                    container.innerHTML = criarPerguntas(listaPerguntas[perguntaAtual])
+                } else {
+                    finalizarQuiz()
+                }
+            } else if (resposta.dataset.correta = 'false'){
+                label.style.borderColor = 'red'
+                somarPontuacao(-5)
+            }
+
+        })
+    })
+
+}
+
+function quiz() {
+    mostrarPergunta(listaPerguntas[0])
 }
 quiz()

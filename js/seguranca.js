@@ -156,7 +156,7 @@ function mostrarPergunta(pergunta) {
                 perguntaAtual++;
                 if (perguntaAtual < listaPerguntas.length) {
                     timer.textContent = ''
-
+                     
                     setInterval.clear
                     cronometro()
                     mostrarPergunta(listaPerguntas[perguntaAtual])
