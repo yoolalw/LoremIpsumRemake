@@ -67,6 +67,29 @@ function criarPerguntas(pergunta) {
     return html
 }
 
+
+
+
+let intevalo = null
+function cronometro(){
+    clearInterval(intervalo)
+    time = 15
+    intervalo = setInterval(() => {
+        if(time > 0 ){ 
+            time--
+            timer.textContent = time
+        } else {
+            timer.textContent = 'Tempo esgotado.'
+            if(perguntaAtual < listaPerguntas.length){
+                mostrarPergunta(listaPerguntas[perguntaAtual])
+                somarPontuacao(-5)
+            } else {
+                finalizarQuiz()
+            } 
+        }
+    }, 1000)
+}
+
 function quiz(){
     container.innerHTML = criarPerguntas(listaPerguntas[0])
 }
