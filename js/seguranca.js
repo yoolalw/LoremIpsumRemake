@@ -60,7 +60,7 @@ function criarPerguntas(pergunta) {
 
     pergunta.respostas.forEach((resposta, index) => {
         html += `
-        <label class="rounded-xl border-1 w-[500px] h-[100px] items-center flex justify-center text-[30px] text-center">
+        <label class="label rounded-xl border-1 w-[500px] h-[100px] items-center flex justify-center text-[30px] text-center">
             <input 
                 type="radio"  
                 name="opcao" 
@@ -87,7 +87,6 @@ function somarPontuação(quantidade) {
 }
 
 let intervalo = null
-
 function cronometro() {
     clearInterval(intervalo)
     timerAtual = 15;
@@ -146,15 +145,19 @@ function mostrarPergunta(pergunta) {
     container.innerHTML = criarPerguntas(pergunta)
     const respostas = document.querySelectorAll('input[name="opcao"]');
 
+    console.log(respostas)
     respostas.forEach(resposta => {
         resposta.addEventListener('click', () => {
+            const label = resposta.parentElement
             if (resposta.dataset.correta === 'true') {
                 acertos++
+                label.style.borderColor = 'green'
                 somarPontuação(10)
                 perguntaAtual++;
                 if (perguntaAtual < listaPerguntas.length) {
                     timer.textContent = ''
 
+                    
                     setInterval.clear
                     cronometro()
                     mostrarPergunta(listaPerguntas[perguntaAtual])
@@ -162,6 +165,8 @@ function mostrarPergunta(pergunta) {
                     finalizarQuiz()
                 }
             } else if (resposta.dataset.correta === 'false') {
+                label.style.borderColor = 'red'
+                console.log(label)
                 acertos--
                 somarPontuação(-5)
             }
@@ -170,7 +175,10 @@ function mostrarPergunta(pergunta) {
 }
 function quiz() {
     mostrarPergunta(listaPerguntas[0])
-
     cronometro()
 }
 quiz()
+
+function home() {
+    window.location.href = 'home.html'
+}
