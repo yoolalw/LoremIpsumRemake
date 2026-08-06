@@ -1,145 +1,73 @@
-const container = document.querySelector("#container")
-const timer = document.getElementById("timer")
+const nome = localStorage.getItem("nome")
+const nomeUsuario = document.getElementById("nomeUsuario")
+const img = localStorage.getItem("img")
+const header = document.getElementById("header")
+const img_pessoa = document.createElement("img")
 
 const pontos = document.getElementById("pontos")
-const somaPontos = 0
+const timer = document.getElementById("timer")
+const container = document.getElementById("container")
 
-function home(){
-    window.location.href = "home.html"
-}
+let pontosAtual = 0
+let time = 0
 
-function login() {
-    window.location.href = "login.html"
-    localStorage.clear()
-}
+// HEADER!!
+img_pessoa.src = img
+img_pessoa.className = "rounded-full size-[100px]"
+header.appendChild(img_pessoa)
+nomeUsuario.textContent = `Seja bem-vindo, ${nome}!`
+//----=-==--
 
-function soma(quantidade) {
-    total =  quantidade += somaPontos
-    if(quantidade < 0 ){
-        total = quantidade -= somaPontos
+const perguntas =
+{
+    pergunta1:
+    {
+        titulo: 'Caso alguém faça uma brincadeira ofensiva com um colega, devemos:',
+        respostas:
+            [
+                { texto: 'Partir para a briga', correta: 'false' },
+                { texto: 'Primeiramente conversar sobre o ocorrido', correta: 'true' },
+                { texto: 'Chamar a policia', correta: 'false' }
+            ]
+    },
+    pergunta2:
+    {
+        titulo: 'Quais alterantiva que mostra apenas assuntos sensíveis e devem ser evitados em ambiente de trabalho?',
+        respostas:
+            [
+                { texto: 'Política, religião e futebol', correta: 'true' },
+                { texto: 'Churrasco, café e religião', correta: 'false' },
+                { texto: 'Notícias, esportes e games', correta: 'false' }
+            ]
     }
-    pontos.textContent = `Pontos: ${total}`
 }
 
-function reg(){
-    let time = 16
-    timer.textContent = ''
-    setInterval(() => {
-        if(time>0){
-            time--
-            timer.textContent = time
-        }
-        if(time==0){
-            timer.textContent = "Tempo esgotado."
+const listaPerguntas = [
+    perguntas.pergunta1,
+    perguntas.pergunta2
+]
+
+function criarPerguntas(pergunta) {
+    let html = `<h2 class="font-serif text-[30px]">${pergunta.titulo}</h2>`
+    pergunta.respostas.forEach((resposta, index) => {
+        html += `
+        <label class="label rounded-xl border-1 w-[500px] h-[100px] items-center flex justify-center text-[30px] text-center">
+            <input 
+                type="radio"  
+                name="opcao" 
+                class="mr-4 size-[20px]"
+                data-correta="${resposta.correta}" 
+                id="resposta${index}" 
+                value="${resposta.texto}">
+            ${resposta.texto}
+        </label>
         
-        }
-    }, 1000)
-} 
-reg()
-
-
-container.insertAdjacentHTML('beforeend', `
-    <h2 id="pergunta" class="font-serif text-[30px] text-[#4e6580] mb-3">Caso alguém faça uma 
-brincadeira ofensiva com 
-um colega, devemos: </h2>
-    <label class="text-[20px] h-[40px] w-[500px] border-1 rounded-xl" id="resposta_errada"><input class=" p-4 w-[70px]" type="radio" id="resposta_errada" value="errado">Partir para a briga </label>
-    <label class="text-[20px] h-[40px] w-[500px] border-1 rounded-xl" id="resposta_certa"><input class=" p-4 w-[70px]" type="radio" id="resposta_certa" value="certo">Primeiramente conversar sobre o ocorrido </label>
-    <label class="text-[20px] h-[40px] w-[500px] border-1 rounded-xl" id="resposta_errada2" ><input class=" p-4 w-[70px]" type="radio" id="resposta_errada2" value="errado">Chamar a polícia </label>
-`
-)
-document.addEventListener("click", (e) => {
-    e.preventDefault()
-    const errada = document.querySelector("#resposta_errada")
-    const errada2 = document.getElementById("resposta_errada2")
-    const certa = document.getElementById("resposta_certa")
-    errada.addEventListener("click", (e) => {
-        e.preventDefault()
-        errada.style.borderColor = "red"
-
-        soma(-5)
+        `
     })
-    errada2.addEventListener("click", (e) => {
-        e.preventDefault()
+    return html
+}
 
-        errada2.style.borderColor = "red"
-        soma(-5)
-    })
-    certa.addEventListener("click", (e) => {
-        e.preventDefault()
-
-        soma(10)
-        certa.style.borderColor = "green"
-
-        container.innerHTML = ``
-
-        container.insertAdjacentHTML('beforeend', `
-               <h2 id="pergunta" class="font-serif text-[30px] text-[#4e6580] mb-3">Quais alternativa que 
-mostra apenas assuntos 
-sensíveis e devem ser 
-evitados em ambiente de 
-trabalho?</h2>
-    <label class="text-[20px] h-[40px] w-[500px] border-1 rounded-xl" id="resposta_errada"><input class=" p-4 w-[70px]" type="radio" id="resposta_errada" value="errado">Notícias, esportes e games</label>
-    <label class="text-[20px] h-[40px] w-[500px] border-1 rounded-xl" id="resposta_errada2"><input class=" p-4 w-[70px]" type="radio" id="resposta_errada2" value="errado">Churrasco, café e religião 
-</label>
-    <label class="text-[20px] h-[40px] w-[500px] border-1 rounded-xl" id="resposta_certa" ><input class=" p-4 w-[70px]" type="radio" id="resposta_certa" value="certo">Política, religião e futebol </label> 
-            `)
-        timer.textContent = ""
-        reg()
-        const errada = document.querySelector("#resposta_errada")
-        const errada2 = document.getElementById("resposta_errada2")
-        const certa2 = document.getElementById("resposta_certa")
-        errada.addEventListener("click", (e) => {
-            e.preventDefault()
-            errada.style.borderColor = "red"
-            
-        })
-        errada2.addEventListener("click", (e) => {
-            e.preventDefault()
-
-            errada2.style.borderColor = "red"
-        })
-
-        certa2.addEventListener("click", (e) => {
-            e.preventDefault()
-
-            certa2.style.borderColor = "green"
-
-            container.innerHTML = ``
-
-            container.insertAdjacentHTML('beforeend', `
-    <h2 id="pergunta" class="font-serif text-[30px] text-[#4e6580] mb-3">A faixa zebrada serve 
-para: </h2>
-    <label class="text-[20px] h-[40px] w-[500px] border-1 rounded-xl" id="resposta_errada"><input class=" p-4 w-[70px]" type="radio" id="resposta_errada" value="errado">Marcar golzinho na rua</label>
-    <label class="text-[20px] h-[40px] w-[500px] border-1 rounded-xl" id="resposta_certa"><input class=" p-4 w-[70px]" type="radio" id="resposta_certa" value="certo">Delimitar uma área restrita</label>
-    <label class="text-[20px] h-[40px] w-[500px] border-1 rounded-xl" id="resposta_errada2" ><input class=" p-4 w-[70px]" type="radio" id="resposta_errada2" value="errado">Amarrar o cachorro</label>
-`
-            )
-
-            const errada = document.querySelector("#resposta_errada")
-            const errada2 = document.getElementById("resposta_errada2")
-            const certa3 = document.getElementById("resposta_certa")
-            errada.addEventListener("click", (e) => {
-                e.preventDefault()
-                errada.style.borderColor = "red"
-
-            })
-            errada2.addEventListener("click", (e) => {
-                e.preventDefault()
-
-                errada2.style.borderColor = "red"
-            })
-
-            certa3.addEventListener("click", (e) => {
-                e.preventDefault()
-
-                certa3.style.borderColor = "green"
-
-
-
-            })
-        })
-
-    })
-})
-
-//dsadas
+function quiz(){
+    container.innerHTML = criarPerguntas(listaPerguntas[0])
+}
+quiz()
