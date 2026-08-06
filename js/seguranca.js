@@ -114,19 +114,6 @@ function cronometro() {
     }, 1000)
 }
 
-function clickBotao(botao, cor, callback = null) {
-    if (!botao) return
-
-    botao.addEventListener('click', (e) => {
-        e.preventDefault()
-        botao.style.borderColor = cor;
-
-        if (callback) {
-            callback()
-        }
-    })
-    console.log("clicou botao")
-}
 
 function finalizarQuiz() {
     timer.textContent = ''

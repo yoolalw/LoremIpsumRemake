@@ -72,7 +72,7 @@ function criarPerguntas(pergunta) {
 
 function somarPontuacao(quantidade) {
     pontosAtual += quantidade
-    if (time == 0) {
+    if (timer == 0) {
         pontosAtual -= 5
     }
 
@@ -86,15 +86,18 @@ function cronometro() {
     clearInterval(intervalo)
     time = 15
     intervalo = setInterval(() => {
+        time--
         if (time > 0) {
-            time--
             timer.textContent = time
         } else {
+            clearInterval(intervalo)
             timer.textContent = 'Tempo esgotado.'
+            perguntaAtual++
+            somarPontuacao(-5)
+
             if (perguntaAtual < listaPerguntas.length) {
-                clearInterval(intervalo)
                 mostrarPergunta(listaPerguntas[perguntaAtual])
-                somarPontuacao(-5)
+
             } else {
                 finalizarQuiz()
             }
@@ -102,9 +105,9 @@ function cronometro() {
     }, 1000)
 }
 
-function finalizarQuiz(){
+function finalizarQuiz() {
     let totalPerguntas = listaPerguntas.length
-    let aproveitamento = (acertos/totalPerguntas) * 100
+    let aproveitamento = (acertos / totalPerguntas) * 100
 
     container.innerHTML = `
         <h3>O total de pontos foi: ${pontosAtual}</h3>
@@ -114,7 +117,7 @@ function finalizarQuiz(){
 }
 
 function mostrarPergunta(pergunta) {
-    cronometro()
+    
     container.innerHTML = criarPerguntas(pergunta)
     const respostas = document.querySelectorAll('input[name="opcao"]')
 
@@ -128,12 +131,14 @@ function mostrarPergunta(pergunta) {
                 perguntaAtual++
                 somarPontuacao(10)
                 if (perguntaAtual < listaPerguntas.length) {
-                    clearInterval(intervalo)
-                    container.innerHTML = criarPerguntas(listaPerguntas[perguntaAtual])
+                    timer.textContent = ''
+                    setInterval.clear
+                    cronometro()
+                    mostrarPergunta(listaPerguntas[perguntaAtual])
                 } else {
                     finalizarQuiz()
                 }
-            } else if (resposta.dataset.correta = 'false'){
+            } else if (resposta.dataset.correta = 'false') {
                 label.style.borderColor = 'red'
                 somarPontuacao(-5)
             }
@@ -144,11 +149,12 @@ function mostrarPergunta(pergunta) {
 }
 
 function quiz() {
+    cronometro()
     mostrarPergunta(listaPerguntas[0])
 }
 quiz()
 
-function home(){
+function home() {
     window.location.href = "home.html"
 }
 
