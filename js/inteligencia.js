@@ -34,7 +34,7 @@ const perguntas =
     },
     pergunta2:
     {
-        titulo: 'Quais alterantiva que mostra apenas assuntos sensíveis e devem ser evitados em ambiente de trabalho?',
+        titulo: 'Quais alternativa que mostra apenas assuntos sensíveis e devem ser evitados em ambiente de trabalho?',
         respostas:
             [
                 { texto: 'Política, religião e futebol', correta: 'true' },
@@ -102,6 +102,17 @@ function cronometro() {
     }, 1000)
 }
 
+function finalizarQuiz(){
+    let totalPerguntas = listaPerguntas.length
+    let aproveitamento = (acertos/totalPerguntas) * 100
+
+    container.innerHTML = `
+        <h3>O total de pontos foi: ${pontosAtual}</h3>
+        <h3>O aproveitamento foi: ${aproveitamento}%</h3>
+    `
+
+}
+
 function mostrarPergunta(pergunta) {
     cronometro()
     container.innerHTML = criarPerguntas(pergunta)
@@ -136,3 +147,8 @@ function quiz() {
     mostrarPergunta(listaPerguntas[0])
 }
 quiz()
+
+function home(){
+    window.location.href = "home.html"
+}
+
